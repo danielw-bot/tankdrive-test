@@ -32,7 +32,8 @@ public class Move extends CommandBase {
     Robot.drivetrain.setLeftMotors(lSpeed);
     Robot.drivetrain.setRightMotors(rSpeed);
     setTimeout(time);
-    //change when I find the updated method
+    Robot.drivetrain.setLeftMotors(0.0);
+    Robot.drivetrain.setRightMotors(0.0);
   }
 
   private void setTimeout(double time2) {
