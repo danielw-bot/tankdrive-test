@@ -7,6 +7,12 @@
 
 package frc.robot;
 
+
+import edu.wpi.first.wpilibj.system.LinearSystem;
+import edu.wpi.first.wpilibj.system.plant.DCMotor;
+import edu.wpi.first.wpilibj.system.plant.LinearSystemId;
+import edu.wpi.first.wpiutil.math.numbers.N2;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants.  This class should not be used for any other purpose.  All constants should be
@@ -29,4 +35,31 @@ public final class Constants {
     
     public static final double MOTOR_SPEED_SCALING_FACTOR = 0.5;
     //int or double value from 0-1   
+
+    public static final double ksVolts = 1.11; 
+
+    public static final double kvVoltSecondsPerMeter = 3.0; 
+
+    public static final double kaVoltSecondsSquaredPerMeter = 0.368; 
+
+    public static final double kPDriveVel = 13.3; 
+
+    public static final double kvVoltSecondsPerRadian = 1.5;
+    public static final double kaVoltSecondsSquaredPerRadian = 0.3;
+
+    // DIFFERENTIAL DRIVE KINEMATICS
+    public static final double kTrackwidth = 0.55245; // in meters
+
+    public static final LinearSystem<N2, N2, N2> kDrivetrainPlant =
+    LinearSystemId.identifyDrivetrainSystem(kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter,
+          kvVoltSecondsPerRadian, kaVoltSecondsSquaredPerRadian);
+
+    // Example values only -- use what's on your physical robot!
+    public static final DCMotor kDriveGearbox = DCMotor.getNEO(2);
+    public static final double kDriveGearing = 8;
+    public static final double kWheelDiameterMeters = 0.1016;  // meters = 4 inches
+
+    public static final int[] LEFT_ENCODER_PORTS = new int[]{6, 7}; //TODO: THESE ARE STAND INS
+
+    public static final int[] RIGHT_ENCODER_PORTS = new int[]{8, 9}; //TODO: THESE ARE STAND INS
 }

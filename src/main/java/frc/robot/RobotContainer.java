@@ -11,7 +11,10 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.Move;
+import frc.robot.commands.moveauto;
+import frc.robot.subsystems.DriveTrain;
 
 
 /**
@@ -24,6 +27,8 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER);
   Button xButton = new JoystickButton(driverController, Constants.BUTTON_X);
+
+  public static DriveTrain drivetrain = new DriveTrain();
 
   public double GetDriverRawAxis(int axis) {
     return driverController.getRawAxis(axis);
@@ -53,9 +58,9 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   
-  /* public Command getAutonomousCommand() {
+   public Command getAutonomousCommand() {
     
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
-  } */
+    return new moveauto(drivetrain);
+  } 
 }

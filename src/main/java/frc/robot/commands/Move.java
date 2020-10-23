@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
+import frc.robot.RobotContainer;
 
 
 public class Move extends CommandBase {
@@ -23,17 +24,17 @@ public class Move extends CommandBase {
     this.lSpeed = lSpeed;
     this.rSpeed = rSpeed;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.drivetrain);
+    addRequirements(RobotContainer.drivetrain);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Robot.drivetrain.setLeftMotors(lSpeed);
-    Robot.drivetrain.setRightMotors(rSpeed);
+    RobotContainer.drivetrain.setLeftMotors(lSpeed);
+    RobotContainer.drivetrain.setRightMotors(rSpeed);
     setTimeout(time);
-    Robot.drivetrain.setLeftMotors(0.0);
-    Robot.drivetrain.setRightMotors(0.0);
+    RobotContainer.drivetrain.setLeftMotors(0.0);
+    RobotContainer.drivetrain.setRightMotors(0.0);
   }
 
   private void setTimeout(double time2) {
