@@ -9,9 +9,11 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.RobotBase;
 
+
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -20,6 +22,7 @@ import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+
 
 // simulation classes
 import edu.wpi.first.wpilibj.simulation.EncoderSim;
@@ -36,10 +39,15 @@ public class DriveTrain extends SubsystemBase {
    */
   Encoder leftEncoder = new Encoder(Constants.LEFT_ENCODER_PORTS[0], Constants.LEFT_ENCODER_PORTS[1]);
   Encoder rightEncoder = new Encoder(Constants.RIGHT_ENCODER_PORTS[0], Constants.RIGHT_ENCODER_PORTS[1]);
-  private final TalonSRX motorLeft1 = new TalonSRX(Constants.MOTOR_LEFT_1_ID);
-  //private final TalonSRX motorLeft2 = new TalonSRX(Constants.MOTOR_LEFT_2_ID);
-  private final TalonSRX motorRight1 = new TalonSRX(Constants.MOTOR_RIGHT_1_ID);
-  //private final TalonSRX motorRight2 = new TalonSRX(Constants.MOTOR_RIGHT_2_ID);
+  
+  private final WPI_TalonSRX motorLeft1 = new WPI_TalonSRX(Constants.MOTOR_LEFT_1_ID);
+  private final WPI_TalonSRX motorLeft2 = new WPI_TalonSRX(Constants.MOTOR_LEFT_2_ID);
+  private final WPI_TalonSRX motorRight1 = new WPI_TalonSRX(Constants.MOTOR_RIGHT_1_ID);
+  private final WPI_TalonSRX motorRight2 = new WPI_TalonSRX(Constants.MOTOR_RIGHT_2_ID);
+
+  private final SpeedControllerGroup leftMotors = new SpeedControllerGroup(motorLeft1, motorLeft2);
+
+  private final SpeedControllerGroup rightMotors = new SpeedControllerGroup(motorRight1, motorRight2);
 
   DifferentialDriveOdometry odometry;
 
@@ -71,7 +79,8 @@ public class DriveTrain extends SubsystemBase {
       rightEncoderSim = new EncoderSim(rightEncoder);
 
       // string is the name. Does the value actually matter??
-      gyroAngleSim = new SimDeviceSim("ADXRS450_Gyro" + "[" + SPI.Port.kOnboardCS0.value + "]").getDouble("Angle");
+      gyroAngleSim = new SimDeviceSim("ADXRS450_Gyro" + 
+      "[" + SPI.Port.kOnboardCS0.value + "]").getDouble("Angle");
 
       // the Field2d class lets us visualize our robot in the simulation GUI.
       fieldSim = new Field2d();
@@ -85,7 +94,8 @@ public class DriveTrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    odometry.update(Rotation2d.fromDegrees(getHeading()), leftEncoder.getDistance(), rightEncoder.getDistance());
+    odometry.update(Rotation2d.fromDegrees(getHeading()), leftEncoder.getDistance(), 
+    rightEncoder.getDistance());
   
   }
 
@@ -110,7 +120,7 @@ public class DriveTrain extends SubsystemBase {
     // We negate the right side so that positive voltages make the right side
     // move forward.
     drivetrainSimulator.setInputs(motorLeft1.getMotorOutputPercent() * RobotController.getBatteryVoltage(),
-                                  -motorRight1.getMotorOutputPercent() * RobotController.getBatteryVoltage());
+      -motorRight1.getMotorOutputPercent() * RobotController.getBatteryVoltage());
     drivetrainSimulator.update(0.020);
   
     leftEncoderSim.setDistance(drivetrainSimulator.getState(DifferentialDrivetrainSim.State.kLeftPosition));

@@ -33,7 +33,7 @@ public final class Constants {
     public static final int RIGHT_Y_AXIS = 5;
     public static final int BUTTON_X = 3;
     
-    public static final double MOTOR_SPEED_SCALING_FACTOR = 0.5;
+    public static final double MOTOR_SPEED_SCALING_FACTOR = 1.0;
     //int or double value from 0-1   
 
     public static final double ksVolts = 1.11; 
