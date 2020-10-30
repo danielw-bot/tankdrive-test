@@ -21,6 +21,7 @@ public class moveauto extends CommandBase {
   public moveauto(DriveTrain robotDrive) {
     this.robotDrive = robotDrive;
     
+    System.out.println("moveauto constructor");
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

@@ -100,13 +100,13 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void setLeftMotors(double speed){
-    motorLeft1.set(ControlMode.PercentOutput, speed * -Constants.MOTOR_SPEED_SCALING_FACTOR);
-    //motorLeft2.set(ControlMode.PercentOutput, speed * -Constants.MOTOR_SPEED_SCALING_FACTOR);
+    leftMotors.set(speed);
+    
   }
 
   public void setRightMotors(double speed){
-    motorRight1.set(ControlMode.PercentOutput, speed * Constants.MOTOR_SPEED_SCALING_FACTOR);
-    //motorRight2.set(ControlMode.PercentOutput, speed * Constants.MOTOR_SPEED_SCALING_FACTOR);
+    rightMotors.set(-speed);
+    
   }
 
   public Pose2d getPose() {
@@ -119,8 +119,8 @@ public class DriveTrain extends SubsystemBase {
     // and write the simulated positions and velocities to our simulated encoder and gyro.
     // We negate the right side so that positive voltages make the right side
     // move forward.
-    drivetrainSimulator.setInputs(motorLeft1.getMotorOutputPercent() * RobotController.getBatteryVoltage(),
-      -motorRight1.getMotorOutputPercent() * RobotController.getBatteryVoltage());
+    drivetrainSimulator.setInputs(leftMotors.get() * RobotController.getBatteryVoltage(),
+      -rightMotors.get() * RobotController.getBatteryVoltage());
     drivetrainSimulator.update(0.020);
   
     leftEncoderSim.setDistance(drivetrainSimulator.getState(DifferentialDrivetrainSim.State.kLeftPosition));
