@@ -60,7 +60,6 @@ public class RobotContainer {
   
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    System.out.println("getting autonomous command");
     return new moveauto(drivetrain);
   } 
 }

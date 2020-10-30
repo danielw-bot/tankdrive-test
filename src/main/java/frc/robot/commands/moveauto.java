@@ -29,7 +29,6 @@ public class moveauto extends CommandBase {
   @Override
   public void initialize() {
     startTime = System.nanoTime();
-    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
