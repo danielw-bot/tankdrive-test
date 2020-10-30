@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.RobotBase;
 
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -40,6 +39,7 @@ public class DriveTrain extends SubsystemBase {
   Encoder leftEncoder = new Encoder(Constants.LEFT_ENCODER_PORTS[0], Constants.LEFT_ENCODER_PORTS[1]);
   Encoder rightEncoder = new Encoder(Constants.RIGHT_ENCODER_PORTS[0], Constants.RIGHT_ENCODER_PORTS[1]);
   
+
   private final WPI_TalonSRX motorLeft1 = new WPI_TalonSRX(Constants.MOTOR_LEFT_1_ID);
   private final WPI_TalonSRX motorLeft2 = new WPI_TalonSRX(Constants.MOTOR_LEFT_2_ID);
   private final WPI_TalonSRX motorRight1 = new WPI_TalonSRX(Constants.MOTOR_RIGHT_1_ID);
@@ -63,6 +63,8 @@ public class DriveTrain extends SubsystemBase {
   private Gyro gyro = new ADXRS450_Gyro();
 
   public DriveTrain() {
+    leftEncoder.setDistancePerPulse(0.00187);
+    rightEncoder.setDistancePerPulse(0.00187);
     odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
     if (RobotBase.isSimulation()) {
       // If our robot is simulated
